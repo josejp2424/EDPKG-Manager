@@ -1,0 +1,10 @@
+#!/bin/sh
+# EDPKG GUI launcher: the real GTK3 binary lives under /usr/lib.
+# Essora policy uses gksu for graphical administrator privileges.
+REAL=/usr/lib/edpkg-gui/edpkg-gui
+
+if [ "$(id -u)" -eq 0 ]; then
+    exec "$REAL"
+fi
+
+exec gksu "$REAL"

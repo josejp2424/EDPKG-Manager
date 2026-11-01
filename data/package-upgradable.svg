@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  package-upgradable.svg — Actualizacion disponible
+
+  Familia de estado para la lista de paquetes de la GUI de edpkg. Los tres
+  iconos comparten la misma caja para que se lean como el mismo objeto en
+  distintos estados; solo cambia la insignia de la esquina.
+
+  Sin trazos (stroke): todo son rellenos. Un stroke de 1.5 en un viewBox de 48
+  se convierte en medio pixel cuando la lista dibuja a 16, y desaparece. Los
+  rellenos escalan hacia abajo sin romperse.
+
+  Colores de la insignia:
+    #2e9e4f  instalado
+    #cc3b30  roto
+    #2f7fd1  actualizable
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48"
+     role="img" aria-label="Actualizacion disponible">
+
+  <!-- caja: tono neutro para que el color de estado domine la lectura -->
+  <rect x="3"  y="11" width="32" height="7"  rx="2" fill="#c8c0b0"/>
+  <rect x="5"  y="17" width="28" height="23" rx="2" fill="#e4ded1"/>
+  <rect x="16" y="11" width="6" height="29" fill="#b9ae99"/>
+
+  <!-- insignia de estado -->
+  <circle cx="36" cy="35" r="11.5" fill="#2f7fd1"/>
+  <g fill="#ffffff">
+  <path d="M36 26.5 43 34.5 29 34.5Z"/>
+  <rect x="33.4" y="34" width="5.2" height="8" rx="1.2"/>
+  </g>
+</svg>

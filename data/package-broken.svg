@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  package-broken.svg — Paquete roto
+
+  Familia de estado para la lista de paquetes de la GUI de edpkg. Los tres
+  iconos comparten la misma caja para que se lean como el mismo objeto en
+  distintos estados; solo cambia la insignia de la esquina.
+
+  Sin trazos (stroke): todo son rellenos. Un stroke de 1.5 en un viewBox de 48
+  se convierte en medio pixel cuando la lista dibuja a 16, y desaparece. Los
+  rellenos escalan hacia abajo sin romperse.
+
+  Colores de la insignia:
+    #2e9e4f  instalado
+    #cc3b30  roto
+    #2f7fd1  actualizable
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48"
+     role="img" aria-label="Paquete roto">
+
+  <!-- caja: tono neutro para que el color de estado domine la lectura -->
+  <rect x="3"  y="11" width="32" height="7"  rx="2" fill="#c8c0b0"/>
+  <rect x="5"  y="17" width="28" height="23" rx="2" fill="#e4ded1"/>
+  <rect x="16" y="11" width="6" height="9"  fill="#b9ae99"/>
+  <rect x="16" y="26" width="6" height="14" fill="#b9ae99"/>
+
+  <!-- insignia de estado -->
+  <circle cx="36" cy="35" r="11.5" fill="#cc3b30"/>
+  <g fill="#ffffff">
+  <rect x="34" y="27.5" width="4" height="9.5" rx="1.8"/>
+  <circle cx="36" cy="41" r="2.4"/>
+  </g>
+</svg>

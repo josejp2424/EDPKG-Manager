@@ -1,0 +1,14 @@
+-----------------------------------------------------------------------------
+ Missing command(s): [0;32m7z column notify-send[0m
+-----------------------------------------------------------------------------
+
+ YOU HAVE INSTALLED 3 PROGRAMS MANAGED BY "AM"
+
+ -  APPNAME | DB          | VERSION | TYPE        | SIZE     
+ -  ------- | --          | ------- | ----        | ----     
+ _ ◆am      | am          | 10.6-6  | bash-script | 267.01 KiB
+ _ ◆fakeone | unsupported | 1.2.3   | appimage    | 3.98 KiB  
+ _ ◆faketwo | unsupported | 1.2.3   | appimage    | 3.98 KiB  
+
+ TOTAL SIZE: 274.98 KiB of disk space in use
+

@@ -1,0 +1,66 @@
+#!/bin/sh
+# Essora Project: migrate launchers created by the EDPKG 0.1.38 AM engine.
+# The AppImages themselves stay where AM installed them; no downloads occur.
+set -eu
+
+root=""
+mode="${1:-}"
+case "$mode" in
+    --all) [ "$#" -eq 1 ] || exit 2 ;;
+    --test-root)
+        # Testing interface: permitted only with explicit opt-in; not called by EDPKG.
+        [ "${EDPKG_DESKTOP_TEST:-}" = 1 ] && [ "$#" -eq 3 ] || exit 2
+        root="${2%/}"
+        case "$root" in /*) ;; *) exit 2 ;; esac
+        mode="$3"
+        ;;
+    *) [ "$#" -eq 1 ] || { echo 'Usage: appimage-desktop-migrate <id>|--all' >&2; exit 2; } ;;
+esac
+[ -n "$root" ] || [ "$(id -u)" = 0 ] || { echo 'Must run as root' >&2; exit 1; }
+
+srcdir="$root/usr/local/share/applications"
+dstdir="$root/usr/share/applications"
+appsdir="$root/opt"
+
+migrate_one() {
+    id=$1
+    # No user-controlled paths, regex or shell fragments are allowed in the name.
+    case "$id" in ''|.|..|*[!A-Za-z0-9._+-]*) return 1 ;; esac
+    old="$srcdir/$id-AM.desktop"
+    new="$dstdir/$id-AM.desktop"
+    remove="$appsdir/$id/remove"
+    [ -f "$old" ] && [ ! -L "$old" ] || return 1
+    [ -f "$remove" ] && [ ! -L "$remove" ] || return 1
+    grep -q '^\[Desktop Entry\]' "$old" || return 1
+    [ ! -e "$new" ] && [ ! -L "$new" ] || return 1
+    mkdir -p "$dstdir" || return 1
+    # Install the new launcher before updating the removal recipe, then remove
+    # the old copy. Refuse to replace any existing system .desktop file.
+    install -m0644 "$old" "$new" || return 1
+    if ! sed -i 's#/usr/local/share/applications/#/usr/share/applications/#g' "$remove"; then
+        rm -f "$new"
+        return 1
+    fi
+    rm -f "$old" || return 1
+    echo "Essora AppImage launcher migrated: $id"
+}
+
+if [ "$mode" = --all ]; then
+    count=0
+    for f in "$srcdir"/*-AM.desktop; do
+        [ -f "$f" ] || continue
+        name=${f##*/}
+        name=${name%-AM.desktop}
+        if migrate_one "$name"; then count=$((count+1)); fi
+    done
+    [ "$count" -gt 0 ] && [ -z "$root" ] && command -v update-desktop-database >/dev/null 2>&1 && \
+        update-desktop-database /usr/share/applications >/dev/null 2>&1 || :
+else
+    migrate_one "$mode" || {
+        echo "No matching legacy AM launcher for: $mode (or a system launcher already exists)" >&2
+        exit 1
+    }
+    if [ -z "$root" ] && command -v update-desktop-database >/dev/null 2>&1; then
+        update-desktop-database /usr/share/applications >/dev/null 2>&1 || :
+    fi
+fi

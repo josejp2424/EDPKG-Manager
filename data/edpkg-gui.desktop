@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Essora Package Manager
+Name[es]=Gestor de paquetes Essora
+Comment=Graphical DEB, Flatpak and AppImage package manager for Essora
+Comment[es]=Gestor gráfico de paquetes DEB, Flatpak y AppImage para Essora
+Exec=/usr/bin/edpkg-gui
+Icon=/usr/lib/edpkg-gui/edpkg-manager.png
+Terminal=false
+Categories=System;PackageManager;Settings;
+StartupNotify=true
